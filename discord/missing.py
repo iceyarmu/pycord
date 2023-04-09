@@ -33,11 +33,10 @@ T = TypeVar('T')
 class MissingType(enum.Enum):
     MISSING = enum.auto()
 
-    def __bool__(self) -> Literal[True]:
+    def __bool__(self) -> Literal[False]:
         return False
 
 MISSING: Literal[MissingType.MISSING] = MissingType.MISSING
 MissingField = field(default=MISSING)
 
 Maybe = Union[T, MissingType]
-
