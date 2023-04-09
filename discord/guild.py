@@ -80,10 +80,10 @@ from .threads import Thread, ThreadMember
 from .user import User
 from .welcome_screen import WelcomeScreen, WelcomeScreenChannel
 from .widget import Widget
+from .missing import MISSING, Maybe
+
 
 __all__ = ("Guild",)
-
-MISSING = utils.MISSING
 
 if TYPE_CHECKING:
     import datetime
@@ -1119,7 +1119,7 @@ class Guild(Hashable):
         self,
         name: str,
         channel_type: ChannelType,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
         category: Snowflake | None = None,
         **options: Any,
     ):
@@ -1165,11 +1165,11 @@ class Guild(Hashable):
         *,
         reason: str | None = None,
         category: CategoryChannel | None = None,
-        position: int = MISSING,
-        topic: str = MISSING,
-        slowmode_delay: int = MISSING,
-        nsfw: bool = MISSING,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        position: Maybe[int] = MISSING,
+        topic: Maybe[str] = MISSING,
+        slowmode_delay: Maybe[int] = MISSING,
+        nsfw: Maybe[bool] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
     ) -> TextChannel:
         """|coro|
 
@@ -1280,12 +1280,12 @@ class Guild(Hashable):
         *,
         reason: str | None = None,
         category: CategoryChannel | None = None,
-        position: int = MISSING,
-        bitrate: int = MISSING,
-        user_limit: int = MISSING,
-        rtc_region: VoiceRegion | None = MISSING,
-        video_quality_mode: VideoQualityMode = MISSING,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        position: Maybe[int] = MISSING,
+        bitrate: Maybe[int] = MISSING,
+        user_limit: Maybe[int] = MISSING,
+        rtc_region: Maybe[VoiceRegion | None] = MISSING,
+        video_quality_mode: Maybe[VideoQualityMode] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
     ) -> VoiceChannel:
         """|coro|
 
@@ -1369,8 +1369,8 @@ class Guild(Hashable):
         name: str,
         *,
         topic: str,
-        position: int = MISSING,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        position: Maybe[int] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
         category: CategoryChannel | None = None,
         reason: str | None = None,
     ) -> StageChannel:
@@ -1439,11 +1439,11 @@ class Guild(Hashable):
         *,
         reason: str | None = None,
         category: CategoryChannel | None = None,
-        position: int = MISSING,
-        topic: str = MISSING,
-        slowmode_delay: int = MISSING,
-        nsfw: bool = MISSING,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        position: Maybe[int] = MISSING,
+        topic: Maybe[str] = MISSING,
+        slowmode_delay: Maybe[int] = MISSING,
+        nsfw: Maybe[bool] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
     ) -> ForumChannel:
         """|coro|
 
@@ -1552,9 +1552,9 @@ class Guild(Hashable):
         self,
         name: str,
         *,
-        overwrites: dict[Role | Member, PermissionOverwrite] = MISSING,
+        overwrites: Maybe[dict[Role | Member, PermissionOverwrite]] = MISSING,
         reason: str | None = None,
-        position: int = MISSING,
+        position: Maybe[int] = MISSING,
     ) -> CategoryChannel:
         """|coro|
 
@@ -1655,28 +1655,28 @@ class Guild(Hashable):
     async def edit(
         self,
         *,
-        reason: str | None = MISSING,
-        name: str = MISSING,
-        description: str | None = MISSING,
-        icon: bytes | None = MISSING,
-        banner: bytes | None = MISSING,
-        splash: bytes | None = MISSING,
-        discovery_splash: bytes | None = MISSING,
-        community: bool = MISSING,
-        afk_channel: VoiceChannel | None = MISSING,
-        owner: Snowflake = MISSING,
-        afk_timeout: int = MISSING,
-        default_notifications: NotificationLevel = MISSING,
-        verification_level: VerificationLevel = MISSING,
-        explicit_content_filter: ContentFilter = MISSING,
-        vanity_code: str = MISSING,
-        system_channel: TextChannel | None = MISSING,
-        system_channel_flags: SystemChannelFlags = MISSING,
-        preferred_locale: str = MISSING,
-        rules_channel: TextChannel | None = MISSING,
-        public_updates_channel: TextChannel | None = MISSING,
-        premium_progress_bar_enabled: bool = MISSING,
-        disable_invites: bool = MISSING,
+        reason: Maybe[str | None] = MISSING,
+        name: Maybe[str] = MISSING,
+        description: Maybe[str | None] = MISSING,
+        icon: Maybe[bytes | None] = MISSING,
+        banner: Maybe[bytes | None] = MISSING,
+        splash: Maybe[bytes | None] = MISSING,
+        discovery_splash: Maybe[bytes | None] = MISSING,
+        community: Maybe[bool] = MISSING,
+        afk_channel: Maybe[VoiceChannel | None] = MISSING,
+        owner: Maybe[Snowflake] = MISSING,
+        afk_timeout: Maybe[int] = MISSING,
+        default_notifications: Maybe[NotificationLevel] = MISSING,
+        verification_level: Maybe[VerificationLevel] = MISSING,
+        explicit_content_filter: Maybe[ContentFilter] = MISSING,
+        vanity_code: Maybe[str] = MISSING,
+        system_channel: Maybe[TextChannel | None] = MISSING,
+        system_channel_flags: Maybe[SystemChannelFlags] = MISSING,
+        preferred_locale: Maybe[str] = MISSING,
+        rules_channel: Maybe[TextChannel | None] = MISSING,
+        public_updates_channel: Maybe[TextChannel | None] = MISSING,
+        premium_progress_bar_enabled: Maybe[bool] = MISSING,
+        disable_invites: Maybe[bool] = MISSING,
     ) -> Guild:
         r"""|coro|
 
@@ -2218,7 +2218,7 @@ class Guild(Hashable):
         *,
         days: int,
         compute_prune_count: bool = True,
-        roles: list[Snowflake] = MISSING,
+        roles: Maybe[list[Snowflake]] = MISSING,
         reason: str | None = None,
     ) -> int | None:
         r"""|coro|
@@ -2334,7 +2334,7 @@ class Guild(Hashable):
         return [Webhook.from_state(d, state=self._state) for d in data]
 
     async def estimate_pruned_members(
-        self, *, days: int, roles: list[Snowflake] = MISSING
+        self, *, days: int, roles: Maybe[list[Snowflake]] = MISSING
     ) -> int:
         """|coro|
 
@@ -2409,7 +2409,7 @@ class Guild(Hashable):
         return result
 
     async def create_template(
-        self, *, name: str, description: str = MISSING
+        self, *, name: str, description: Maybe[str] = MISSING
     ) -> Template:
         """|coro|
 
@@ -2708,7 +2708,7 @@ class Guild(Hashable):
         *,
         name: str,
         image: bytes,
-        roles: list[Role] = MISSING,
+        roles: Maybe[list[Role]] = MISSING,
         reason: str | None = None,
     ) -> Emoji:
         r"""|coro|
@@ -2865,12 +2865,12 @@ class Guild(Hashable):
     async def create_role(
         self,
         *,
-        name: str = MISSING,
-        permissions: Permissions = MISSING,
-        color: Colour | int = MISSING,
-        colour: Colour | int = MISSING,
-        hoist: bool = MISSING,
-        mentionable: bool = MISSING,
+        name: Maybe[str] = MISSING,
+        permissions: Maybe[Permissions] = MISSING,
+        color: Maybe[Colour | int] = MISSING,
+        colour: Maybe[Colour | int] = MISSING,
+        hoist: Maybe[bool] = MISSING,
+        mentionable: Maybe[bool] = MISSING,
         reason: str | None = None,
     ) -> Role:
         """|coro|
@@ -3262,7 +3262,7 @@ class Guild(Hashable):
         return Widget(state=self._state, data=data)
 
     async def edit_widget(
-        self, *, enabled: bool = MISSING, channel: Snowflake | None = MISSING
+        self, *, enabled: Maybe[bool] = MISSING, channel: Maybe[Snowflake | None] = MISSING
     ) -> None:
         """|coro|
 
@@ -3646,13 +3646,13 @@ class Guild(Hashable):
         self,
         *,
         name: str,
-        description: str = MISSING,
+        description: Maybe[str] = MISSING,
         start_time: datetime,
-        end_time: datetime = MISSING,
+        end_time: Maybe[datetime] = MISSING,
         location: str | int | VoiceChannel | StageChannel | ScheduledEventLocation,
         privacy_level: ScheduledEventPrivacyLevel = ScheduledEventPrivacyLevel.guild_only,
         reason: str | None = None,
-        image: bytes = MISSING,
+        image: Maybe[bytes] = MISSING,
     ) -> ScheduledEvent | None:
         """|coro|
         Creates a scheduled event.

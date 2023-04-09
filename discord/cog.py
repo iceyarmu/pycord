@@ -34,6 +34,7 @@ from typing import Any, Callable, ClassVar, Generator, Mapping, TypeVar, overloa
 
 import discord.utils
 
+from .missing import MISSING, Maybe
 from . import errors
 from .commands import (
     ApplicationCommand,
@@ -50,8 +51,6 @@ __all__ = (
 
 CogT = TypeVar("CogT", bound="Cog")
 FuncT = TypeVar("FuncT", bound=Callable[..., Any])
-
-MISSING: Any = discord.utils.MISSING
 
 
 def _is_submodule(parent: str, child: str) -> bool:
@@ -378,7 +377,7 @@ class Cog(metaclass=CogMeta):
         )
 
     @classmethod
-    def listener(cls, name: str = MISSING) -> Callable[[FuncT], FuncT]:
+    def listener(cls, name: Maybe[str] = MISSING) -> Callable[[FuncT], FuncT]:
         """A decorator that marks a function as a listener.
 
         This is the cog equivalent of :meth:`.Bot.listen`.

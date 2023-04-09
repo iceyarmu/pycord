@@ -30,7 +30,8 @@ from typing import TYPE_CHECKING, Any, Iterator
 from .asset import Asset, AssetMixin
 from .partial_emoji import PartialEmoji, _EmojiTag
 from .user import User
-from .utils import MISSING, SnowflakeList, snowflake_time
+from .utils import SnowflakeList, snowflake_time
+from .missing import MISSING, Maybe
 
 __all__ = ("Emoji",)
 
@@ -221,8 +222,8 @@ class Emoji(_EmojiTag, AssetMixin):
     async def edit(
         self,
         *,
-        name: str = MISSING,
-        roles: list[Snowflake] = MISSING,
+        name: Maybe[str] = MISSING,
+        roles: Maybe[list[Snowflake]] = MISSING,
         reason: str | None = None,
     ) -> Emoji:
         r"""|coro|

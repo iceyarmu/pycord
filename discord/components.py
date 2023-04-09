@@ -29,7 +29,8 @@ from typing import TYPE_CHECKING, Any, ClassVar, TypeVar
 
 from .enums import ButtonStyle, ChannelType, ComponentType, InputTextStyle, try_enum
 from .partial_emoji import PartialEmoji, _EmojiTag
-from .utils import MISSING, get_slots
+from .utils import get_slots
+from .missing import MISSING, Maybe
 
 if TYPE_CHECKING:
     from .emoji import Emoji
@@ -403,7 +404,7 @@ class SelectOption:
         self,
         *,
         label: str,
-        value: str = MISSING,
+        value: Maybe[str] = MISSING,
         description: str | None = None,
         emoji: str | Emoji | PartialEmoji | None = None,
         default: bool = False,

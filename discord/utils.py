@@ -38,7 +38,6 @@ import unicodedata
 import warnings
 from base64 import b64encode
 from bisect import bisect_left
-from dataclasses import field
 from inspect import isawaitable as _isawaitable
 from inspect import signature as _signature
 from operator import attrgetter
@@ -64,6 +63,7 @@ from typing import (
 )
 
 from .errors import HTTPException, InvalidArgument
+from .missing import MISSING, Maybe
 
 try:
     import orjson
@@ -101,25 +101,6 @@ __all__ = (
 )
 
 DISCORD_EPOCH = 1420070400000
-
-
-class _MissingSentinel:
-    def __eq__(self, other) -> bool:
-        return False
-
-    def __bool__(self) -> bool:
-        return False
-
-    def __repr__(self) -> str:
-        return "..."
-
-
-MISSING: Any = _MissingSentinel()
-# As of 3.11, directly setting a dataclass field to MISSING causes a ValueError. Using
-# field(default=MISSING) produces the same error, but passing a lambda to
-# default_factory produces the same behavior as default=MISSING and does not raise an
-# error.
-MissingField = field(default_factory=lambda: MISSING)
 
 
 class _cached_property:
@@ -382,11 +363,11 @@ def deprecated(
 def oauth_url(
     client_id: int | str,
     *,
-    permissions: Permissions = MISSING,
-    guild: Snowflake = MISSING,
-    redirect_uri: str = MISSING,
-    scopes: Iterable[str] = MISSING,
-    disable_guild_select: bool = False,
+    permissions: Maybe[Permissions] = MISSING,
+    guild: Maybe[Snowflake] = MISSING,
+    redirect_uri: Maybe[str] = MISSING,
+    scopes: Maybe[Iterable[str]] = MISSING,
+    disable_guild_select: Maybe[bool] = False,
 ) -> str:
     """A helper function that returns the OAuth2 URL for inviting the bot
     into guilds.
@@ -567,7 +548,7 @@ def get(iterable: Iterable[T], **attrs: Any) -> T | None:
     return None
 
 
-async def get_or_fetch(obj, attr: str, id: int, *, default: Any = MISSING) -> Any:
+async def get_or_fetch(obj, attr: str, id: int, *, default: Maybe[Any] = MISSING) -> Any:
     """|coro|
 
     Attempts to get an attribute from the object in cache. If it fails, it will attempt to fetch it.

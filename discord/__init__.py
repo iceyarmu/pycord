@@ -71,5 +71,6 @@ from .voice_client import *
 from .webhook import *
 from .welcome_screen import *
 from .widget import *
+from .missing import *
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())

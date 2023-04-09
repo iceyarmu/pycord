@@ -33,6 +33,7 @@ import yarl
 
 from . import utils
 from .errors import DiscordException, InvalidArgument
+from .missing import MISSING, Maybe
 
 __all__ = ("Asset",)
 
@@ -42,9 +43,6 @@ if TYPE_CHECKING:
 
 VALID_STATIC_FORMATS = frozenset({"jpeg", "jpg", "webp", "png"})
 VALID_ASSET_FORMATS = VALID_STATIC_FORMATS | {"gif"}
-
-
-MISSING = utils.MISSING
 
 
 class AssetMixin:
@@ -303,9 +301,9 @@ class Asset(AssetMixin):
     def replace(
         self,
         *,
-        size: int = MISSING,
-        format: ValidAssetFormatTypes = MISSING,
-        static_format: ValidStaticFormatTypes = MISSING,
+        size: Maybe[int] = MISSING,
+        format: Maybe[ValidAssetFormatTypes] = MISSING,
+        static_format: Maybe[ValidStaticFormatTypes] = MISSING,
     ) -> Asset:
         """Returns a new asset with the passed components replaced.
 

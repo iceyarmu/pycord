@@ -96,14 +96,13 @@ if TYPE_CHECKING:
     from .types.channel import PermissionOverwrite as PermissionOverwritePayload
     from .ui.view import View
     from .user import ClientUser
+    from .missing import MISSING, Maybe
 
     PartialMessageableChannel = Union[
         TextChannel, VoiceChannel, StageChannel, Thread, DMChannel, PartialMessageable
     ]
     MessageableChannel = Union[PartialMessageableChannel, GroupChannel]
     SnowflakeTime = Union["Snowflake", datetime]
-
-MISSING = utils.MISSING
 
 
 async def _single_delete_strategy(
@@ -117,7 +116,7 @@ async def _purge_messages_helper(
     channel: TextChannel | Thread | VoiceChannel,
     *,
     limit: int | None = 100,
-    check: Callable[[Message], bool] = MISSING,
+    check: Maybe[Callable[[Message], bool]] = MISSING,
     before: SnowflakeTime | None = None,
     after: SnowflakeTime | None = None,
     around: SnowflakeTime | None = None,
@@ -997,10 +996,10 @@ class GuildChannel:
         self,
         *,
         beginning: bool,
-        offset: int = MISSING,
-        category: Snowflake | None = MISSING,
-        sync_permissions: bool = MISSING,
-        reason: str | None = MISSING,
+        offset: Maybe[int] = MISSING,
+        category: Maybe[Snowflake | None] = MISSING,
+        sync_permissions: Maybe[bool] = MISSING,
+        reason: Maybe[str | None] = MISSING,
     ) -> None:
         ...
 
@@ -1009,10 +1008,10 @@ class GuildChannel:
         self,
         *,
         end: bool,
-        offset: int = MISSING,
-        category: Snowflake | None = MISSING,
-        sync_permissions: bool = MISSING,
-        reason: str = MISSING,
+        offset: Maybe[int] = MISSING,
+        category: Maybe[Snowflake | None] = MISSING,
+        sync_permissions: Maybe[bool] = MISSING,
+        reason: Maybe[str] = MISSING,
     ) -> None:
         ...
 
@@ -1021,10 +1020,10 @@ class GuildChannel:
         self,
         *,
         before: Snowflake,
-        offset: int = MISSING,
-        category: Snowflake | None = MISSING,
-        sync_permissions: bool = MISSING,
-        reason: str = MISSING,
+        offset: Maybe[int] = MISSING,
+        category: Maybe[Snowflake | None] = MISSING,
+        sync_permissions: Maybe[bool] = MISSING,
+        reason: Maybe[str] = MISSING,
     ) -> None:
         ...
 
@@ -1033,10 +1032,10 @@ class GuildChannel:
         self,
         *,
         after: Snowflake,
-        offset: int = MISSING,
-        category: Snowflake | None = MISSING,
-        sync_permissions: bool = MISSING,
-        reason: str = MISSING,
+        offset: Maybe[int] = MISSING,
+        category: Maybe[Snowflake | None] = MISSING,
+        sync_permissions: Maybe[bool] = MISSING,
+        reason: Maybe[str] = MISSING,
     ) -> None:
         ...
 

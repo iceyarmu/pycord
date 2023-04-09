@@ -57,8 +57,7 @@ if TYPE_CHECKING:
     from .types.automod import AutoModActionMetadata as AutoModActionMetadataPayload
     from .types.automod import AutoModRule as AutoModRulePayload
     from .types.automod import AutoModTriggerMetadata as AutoModTriggerMetadataPayload
-
-MISSING = utils.MISSING
+    from .missing import MISSING, Maybe
 
 
 class AutoModActionMetadata:
@@ -86,7 +85,7 @@ class AutoModActionMetadata:
     )
 
     def __init__(
-        self, channel_id: int = MISSING, timeout_duration: timedelta = MISSING
+        self, channel_id: Maybe[int] = MISSING, timeout_duration: Maybe[timedelta] = MISSING
     ):
         self.channel_id: int = channel_id
         self.timeout_duration: timedelta = timeout_duration
@@ -231,11 +230,11 @@ class AutoModTriggerMetadata:
 
     def __init__(
         self,
-        keyword_filter: list[str] = MISSING,
-        regex_patterns: list[str] = MISSING,
-        presets: list[AutoModKeywordPresetType] = MISSING,
-        allow_list: list[str] = MISSING,
-        mention_total_limit: int = MISSING,
+        keyword_filter: Maybe[list[str]] = MISSING,
+        regex_patterns: Maybe[list[str]] = MISSING,
+        presets: Maybe[list[AutoModKeywordPresetType]] = MISSING,
+        allow_list: Maybe[list[str]] = MISSING,
+        mention_total_limit: Maybe[int] = MISSING,
     ):
         self.keyword_filter = keyword_filter
         self.regex_patterns = regex_patterns
@@ -466,13 +465,13 @@ class AutoModRule(Hashable):
     async def edit(
         self,
         *,
-        name: str = MISSING,
-        event_type: AutoModEventType = MISSING,
-        trigger_metadata: AutoModTriggerMetadata = MISSING,
-        actions: list[AutoModAction] = MISSING,
-        enabled: bool = MISSING,
-        exempt_roles: list[Snowflake] = MISSING,
-        exempt_channels: list[Snowflake] = MISSING,
+        name: Maybe[str] = MISSING,
+        event_type: Maybe[AutoModEventType] = MISSING,
+        trigger_metadata: Maybe[AutoModTriggerMetadata] = MISSING,
+        actions: Maybe[list[AutoModAction]] = MISSING,
+        enabled: Maybe[bool] = MISSING,
+        exempt_roles: Maybe[list[Snowflake]] = MISSING,
+        exempt_channels: Maybe[list[Snowflake]] = MISSING,
         reason: str | None = None,
     ) -> AutoModRule | None:
         """|coro|

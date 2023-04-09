@@ -53,7 +53,7 @@ from .partial_emoji import PartialEmoji, _EmojiTag
 from .permissions import PermissionOverwrite, Permissions
 from .stage_instance import StageInstance
 from .threads import Thread
-from .utils import MISSING
+from .missing import MISSING, Maybe
 
 __all__ = (
     "TextChannel",
@@ -387,7 +387,7 @@ class _TextChannel(discord.abc.GuildChannel, Hashable):
         self,
         *,
         limit: int | None = 100,
-        check: Callable[[Message], bool] = MISSING,
+        check: Maybe[Callable[[Message], bool]] = MISSING,
         before: SnowflakeTime | None = None,
         after: SnowflakeTime | None = None,
         around: SnowflakeTime | None = None,
@@ -865,7 +865,7 @@ class TextChannel(discord.abc.Messageable, _TextChannel):
         *,
         name: str,
         message: Snowflake | None = None,
-        auto_archive_duration: ThreadArchiveDuration = MISSING,
+        auto_archive_duration: Maybe[ThreadArchiveDuration] = MISSING,
         type: ChannelType | None = None,
         reason: str | None = None,
     ) -> Thread:
@@ -1160,7 +1160,7 @@ class ForumChannel(_TextChannel):
         view=None,
         applied_tags=None,
         auto_archive_duration: ThreadArchiveDuration = MISSING,
-        slowmode_delay: int = MISSING,
+        slowmode_delay: Maybe[int] = MISSING,
         reason: str | None = None,
     ) -> Thread:
         """|coro|
@@ -1641,7 +1641,7 @@ class VoiceChannel(discord.abc.Messageable, VocalGuildChannel):
         self,
         *,
         limit: int | None = 100,
-        check: Callable[[Message], bool] = MISSING,
+        check: Maybe[Callable[[Message], bool]] = MISSING,
         before: SnowflakeTime | None = None,
         after: SnowflakeTime | None = None,
         around: SnowflakeTime | None = None,
@@ -2167,7 +2167,7 @@ class StageChannel(discord.abc.Messageable, VocalGuildChannel):
         self,
         *,
         limit: int | None = 100,
-        check: Callable[[Message], bool] = MISSING,
+        check: Maybe[Callable[[Message], bool]] = MISSING,
         before: SnowflakeTime | None = None,
         after: SnowflakeTime | None = None,
         around: SnowflakeTime | None = None,
@@ -2348,7 +2348,7 @@ class StageChannel(discord.abc.Messageable, VocalGuildChannel):
         self,
         *,
         topic: str,
-        privacy_level: StagePrivacyLevel = MISSING,
+        privacy_level: Maybe[StagePrivacyLevel] = MISSING,
         reason: str | None = None,
         send_notification: bool | None = False,
     ) -> StageInstance:

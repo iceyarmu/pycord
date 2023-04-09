@@ -58,10 +58,10 @@ from .template import Template
 from .threads import Thread
 from .ui.view import View
 from .user import ClientUser, User
-from .utils import MISSING
 from .voice_client import VoiceClient
 from .webhook import Webhook
 from .widget import Widget
+from .missing import MISSING, Maybe
 
 if TYPE_CHECKING:
     from .abc import GuildChannel, PrivateChannel, Snowflake, SnowflakeTime
@@ -1157,7 +1157,7 @@ class Client:
         return asyncio.wait_for(future, timeout)
 
     # event registration
-    def add_listener(self, func: Coro, name: str = MISSING) -> None:
+    def add_listener(self, func: Coro, name: Maybe[str] = MISSING) -> None:
         """The non decorator alternative to :meth:`.listen`.
 
         Parameters
@@ -1204,7 +1204,7 @@ class Client:
             name,
         )
 
-    def remove_listener(self, func: Coro, name: str = MISSING) -> None:
+    def remove_listener(self, func: Coro, name: Maybe[str] = MISSING) -> None:
         """Removes a listener from the pool of listeners.
 
         Parameters
@@ -1224,7 +1224,7 @@ class Client:
             except ValueError:
                 pass
 
-    def listen(self, name: str = MISSING, once: bool = False) -> Callable[[Coro], Coro]:
+    def listen(self, name: Maybe[str] = MISSING, once: bool = False) -> Callable[[Coro], Coro]:
         """A decorator that registers another function as an external
         event listener. Basically this allows you to listen to multiple
         events from different places e.g. such as :func:`.on_ready`
@@ -1500,8 +1500,8 @@ class Client:
         self,
         *,
         name: str,
-        icon: bytes = MISSING,
-        code: str = MISSING,
+        icon: Maybe[bytes] = MISSING,
+        code: Maybe[str] = MISSING,
     ) -> Guild:
         """|coro|
 
