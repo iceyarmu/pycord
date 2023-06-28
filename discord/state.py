@@ -794,20 +794,22 @@ class ConnectionState:
                     self.dispatch("reaction_clear_emoji", reaction)
 
     def parse_interaction_create(self, data) -> None:
-        interaction = Interaction(data=data, state=self)
-        if data["type"] == 3:  # interaction component
-            custom_id = interaction.data["custom_id"]  # type: ignore
-            component_type = interaction.data["component_type"]  # type: ignore
-            self._view_store.dispatch(component_type, custom_id, interaction)
-        if interaction.type == InteractionType.modal_submit:
-            user_id, custom_id = (
-                interaction.user.id,
-                interaction.data["custom_id"],
-            )
-            asyncio.create_task(
-                self._modal_store.dispatch(user_id, custom_id, interaction)
-            )
-
+        try:
+            interaction = Interaction(data=data, state=self)
+            if data["type"] == 3:  # interaction component
+                custom_id = interaction.data["custom_id"]  # type: ignore
+                component_type = interaction.data["component_type"]  # type: ignore
+                self._view_store.dispatch(component_type, custom_id, interaction)
+            if interaction.type == InteractionType.modal_submit:
+                user_id, custom_id = (
+                    interaction.user.id,
+                    interaction.data["custom_id"],
+                )
+                asyncio.create_task(
+                    self._modal_store.dispatch(user_id, custom_id, interaction)
+                )
+        except:
+            return
         self.dispatch("interaction", interaction)
 
     def parse_presence_update(self, data) -> None:

@@ -522,15 +522,17 @@ class ApplicationCommandMixin(ABC):
 
         if not force:
             prefetched_commands: list[interactions.ApplicationCommand] = []
-            if self._bot.user:
-                if guild_id is None:
-                    prefetched_commands = await self._bot.http.get_global_commands(
-                        self._bot.user.id
-                    )
-                else:
-                    prefetched_commands = await self._bot.http.get_guild_commands(
-                        self._bot.user.id, guild_id
-                    )
+            try:
+                if self._bot.user:
+                    if guild_id is None:
+                        prefetched_commands = await self._bot.http.get_global_commands(
+                            self._bot.user.id
+                        )
+                    else:
+                        prefetched_commands = await self._bot.http.get_guild_commands(
+                            self._bot.user.id, guild_id
+                        )
+            except: pass
             desynced = await self.get_desynced_commands(
                 guild_id=guild_id, prefetched=prefetched_commands
             )
